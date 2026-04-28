@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJI — Catering & Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'DM Sans', sans-serif; font-weight: 300; color: #1A0A00; background: #FBF6EE; line-height: 1.6; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+::selection { background: #B83A10; color: #fff; }
+
+:root {
+  --char:  #1A0A00;
+  --ember: #B83A10;
+  --flame: #E05A2B;
+  --cream: #FBF6EE;
+  --sand:  #F0E6D3;
+  --muted: #7A6552;
+  --dim:   #4A3525;
+  --serif: 'Fraunces', serif;
+  --sans:  'DM Sans', sans-serif;
+  --pad:   clamp(1.5rem, 6vw, 5rem);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--pad);
+  background: var(--char);
+}
+.logo {
+  font-family: var(--serif); font-weight: 900; font-style: italic;
+  font-size: 1.55rem; letter-spacing: -.01em; color: var(--cream);
+}
+.logo span { color: var(--flame); }
+.nav-links {
+  display: flex; align-items: center; gap: 1.8rem; list-style: none;
+}
+.nav-links a {
+  font-size: .68rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(251,246,238,.55);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-links .cta {
+  padding: .45rem 1.2rem; background: var(--ember);
+  color: var(--cream) !important; border-radius: 2px;
+  transition: background .2s !important;
+}
+.nav-links .cta:hover { background: var(--flame) !important; }
+
+/* hamburger */
+.burger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.burger span { display: block; width: 24px; height: 1.5px; background: var(--cream); transition: .28s; }
+.burger.on span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger.on span:nth-child(2) { opacity: 0; }
+.burger.on span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.drawer {
+  display: none; position: fixed; inset: 60px 0 0;
+  background: var(--char); flex-direction: column;
+  align-items: center; justify-content: center; gap: .5rem; z-index: 99;
+}
+.drawer.on { display: flex; }
+.drawer a {
+  font-family: var(--serif); font-size: 2.4rem; font-weight: 700;
+  font-style: italic; color: rgba(251,246,238,.8);
+  padding: .5rem 2rem; width: 100%; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s;
+}
+.drawer a:hover { color: var(--flame); }
+.drawer .d-cta { background: var(--ember); color: var(--cream); border: none; margin-top: 1rem; border-radius: 2px; }
+
+@media (min-width: 769px) { .burger { display: none !important; } .drawer { display: none !important; } }
+@media (max-width: 768px) { .nav-links { display: none; } .burger { display: flex; } }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100svh; padding-top: 60px;
+  background: var(--char);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding-left: var(--pad); padding-right: var(--pad);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; width: 700px; height: 700px; border-radius: 50%;
+  top: 50%; left: 50%; transform: translate(-50%, -55%);
+  background: radial-gradient(circle, rgba(184,58,16,.3) 0%, transparent 65%);
+  pointer-events: none; animation: pulse 7s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.6;transform:translate(-50%,-55%) scale(1)} 50%{opacity:1;transform:translate(-50%,-55%) scale(1.1)} }
+
+.hero-eyebrow {
+  font-size: .62rem; font-weight: 500; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--flame);
+  display: flex; align-items: center; gap: .8rem; margin-bottom: 2rem;
+  animation: up .8s .1s both;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--flame);
+}
+.hero h1 {
+  font-family: var(--serif); font-weight: 900; font-style: italic;
+  font-size: clamp(4rem, 10vw, 9rem); line-height: .92;
+  letter-spacing: -.02em; color: var(--cream);
+  margin-bottom: 1.2rem; animation: up .8s .2s both;
+}
+.hero h1 em { color: var(--flame); font-style: normal; }
+.hero-sub {
+  font-size: clamp(.9rem, 1.4vw, 1.05rem); color: rgba(251,246,238,.5);
+  max-width: 380px; line-height: 1.75; margin-bottom: 2.5rem;
+  animation: up .8s .3s both;
+}
+.hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: up .8s .4s both; }
+.btn {
+  display: inline-block; font-size: .7rem; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: .85rem 2rem; border-radius: 2px; transition: all .2s;
+}
+.btn-fire { background: var(--ember); color: #fff; }
+.btn-fire:hover { background: var(--flame); transform: translateY(-2px); }
+.btn-ghost { border: 1.5px solid rgba(251,246,238,.25); color: var(--cream); }
+.btn-ghost:hover { border-color: var(--cream); }
+
+.hero-info {
+  position: absolute; bottom: 2.5rem; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  animation: up .8s .5s both;
+  padding: 0 var(--pad);
+}
+.hi { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(251,246,238,.28); }
+.hi strong { color: rgba(251,246,238,.55); font-weight: 500; display: block; margin-bottom: .2rem; }
+
+@media (max-width: 600px) {
+  .hero-info {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+}
+
+@keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── MENY ── */
+.meny { padding: clamp(4rem,8vw,7rem) var(--pad); background: var(--char); }
+.section-top {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem;
+}
+.section-lbl {
+  font-size: .62rem; font-weight: 500; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--flame);
+  display: flex; align-items: center; gap: .7rem; margin-bottom: .7rem;
+}
+.section-lbl::before { content: ''; width: 18px; height: 1px; background: var(--flame); }
+.section-h {
+  font-family: var(--serif); font-size: clamp(1.8rem,3.5vw,2.8rem);
+  font-weight: 700; line-height: 1.05; color: var(--cream);
+}
+.section-h em { font-style: italic; color: var(--flame); }
+
+.tabs { display: flex; border-bottom: 1px solid rgba(255,255,255,.1); flex-wrap: wrap; }
+.tab {
+  font-size: .65rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; padding: .7rem 1.4rem; cursor: pointer;
+  color: rgba(251,246,238,.35); border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: color .2s, border-color .2s;
+}
+.tab.on { color: var(--flame); border-bottom-color: var(--flame); }
+.tab:hover:not(.on) { color: rgba(251,246,238,.65); }
+
+.panel { display: none; padding-top: 2.5rem; }
+.panel.on { display: block; }
+
+/* price + desc */
+.panel-intro {
+  display: grid; grid-template-columns: 1fr auto; gap: 2rem;
+  align-items: start; margin-bottom: 2rem;
+}
+.panel-desc { font-size: .88rem; color: rgba(251,246,238,.45); line-height: 1.8; max-width: 600px; }
+.price-tag {
+  background: var(--ember); padding: 1.4rem 1.8rem;
+  border-radius: 2px; flex-shrink: 0; text-align: right;
+}
+.price-lbl { font-size: .55rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: .3rem; }
+.price-val { font-family: var(--serif); font-size: 1.8rem; font-weight: 900; color: #fff; line-height: 1; }
+.price-note { font-size: .65rem; color: rgba(255,255,255,.45); margin-top: .4rem; line-height: 1.4; }
+
+/* dishes */
+.dishes { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid rgba(255,255,255,.07); margin-bottom: 1.5rem; }
+.dish { padding: 1.8rem 1.6rem; border-right: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); transition: background .2s; }
+.dish:hover { background: rgba(255,255,255,.03); }
+.dish:nth-child(3n) { border-right: none; }
+.d-cat { font-size: .56rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--flame); margin-bottom: .5rem; }
+.d-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--cream); margin-bottom: .4rem; line-height: 1.2; }
+.d-desc { font-size: .74rem; color: rgba(251,246,238,.38); line-height: 1.6; }
+
+/* sauces */
+.sauces { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.sauce-lbl { font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(251,246,238,.25); margin-right: .3rem; }
+.sauce { padding: .28rem .8rem; border: 1px solid rgba(255,255,255,.1); font-size: .72rem; color: rgba(251,246,238,.45); }
+.vegan { margin-top: 1rem; padding: .8rem 1.2rem; background: rgba(123,175,138,.1); border-left: 2px solid #7BAF8A; font-size: .76rem; color: #7BAF8A; font-style: italic; }
+
+/* courses */
+.course { margin-bottom: 2rem; }
+.c-title { font-family: var(--serif); font-style: italic; font-size: 1.2rem; font-weight: 700; color: var(--cream); padding-bottom: .6rem; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: .8rem; }
+.c-opt { display: flex; gap: .9rem; padding: .8rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+.c-opt:last-child { border: none; }
+.c-sep { font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(251,246,238,.18); flex-shrink: 0; padding-top: .2rem; min-width: 28px; }
+.c-name { font-size: .88rem; font-weight: 500; color: var(--cream); margin-bottom: .1rem; }
+.c-desc { font-size: .74rem; color: rgba(251,246,238,.32); line-height: 1.5; }
+
+/* tapas 2-col */
+.tapas { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,.07); }
+.tap { padding: 1.4rem 1.6rem; border-right: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); }
+.tap:nth-child(2n) { border-right: none; }
+.tap-name { font-size: .88rem; font-weight: 500; color: var(--cream); margin-bottom: .2rem; }
+.tap-desc { font-size: .74rem; color: rgba(251,246,238,.35); line-height: 1.6; }
+
+/* taco */
+.taco { display: grid; grid-template-columns: 3fr 2fr; gap: 3rem; align-items: start; }
+.fills { display: flex; flex-direction: column; }
+.fill { display: flex; gap: .8rem; padding: .8rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+.fill:last-child { border: none; }
+.fill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--flame); flex-shrink: 0; margin-top: .4rem; }
+.fill-name { font-size: .86rem; font-weight: 500; color: var(--cream); margin-bottom: .08rem; }
+.fill-desc { font-size: .72rem; color: rgba(251,246,238,.32); }
+.tilbehor { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); padding: 1.4rem; }
+.til-lbl { font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--flame); margin-bottom: .8rem; }
+.til-row { display: flex; align-items: center; gap: .6rem; padding: .38rem 0; border-bottom: 1px solid rgba(255,255,255,.05); font-size: .8rem; color: rgba(251,246,238,.5); }
+.til-row:last-child { border: none; }
+.til-row::before { content: ''; width: 3px; height: 3px; border-radius: 50%; background: var(--flame); flex-shrink: 0; }
+.taco-note { margin-top: 1.2rem; padding: .9rem 1.3rem; background: rgba(184,58,16,.2); border-left: 2px solid var(--ember); font-size: .75rem; color: rgba(251,246,238,.55); font-style: italic; }
+
+@media (max-width: 800px) {
+  .panel-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+  .dishes { grid-template-columns: 1fr 1fr; }
+  .dishes .dish:nth-child(3n) { border-right: 1px solid rgba(255,255,255,.07); }
+  .dishes .dish:nth-child(2n) { border-right: none; }
+  .tapas { grid-template-columns: 1fr; } .tap { border-right: none; }
+  .taco { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 560px) {
+  .dishes { grid-template-columns: 1fr; } .dish { border-right: none !important; }
+  .tabs { border-bottom: none; } .tab { flex: 1; text-align: center; font-size: .58rem; padding: .65rem .3rem; border-bottom: 2px solid rgba(255,255,255,.06); }
+}
+
+/* ── KONTAKT ── */
+.kontakt { padding: clamp(4rem,8vw,7rem) var(--pad); background: var(--cream); }
+.kontakt-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+
+.k-h {
+  font-family: var(--serif); font-size: clamp(1.8rem,3vw,2.5rem);
+  font-weight: 700; line-height: 1.1; color: var(--char); margin-bottom: 1rem;
+}
+.k-h em { font-style: italic; color: var(--ember); }
+.k-sub { font-size: .88rem; color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; }
+
+.k-items { display: flex; flex-direction: column; }
+.k-item { padding: 1.1rem 0; border-bottom: 1px solid var(--sand); }
+.k-item:first-child { border-top: 1px solid var(--sand); }
+.k-lbl { font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ember); margin-bottom: .3rem; }
+.k-val { font-size: .92rem; font-weight: 500; color: var(--char); }
+.k-val a:hover { color: var(--ember); }
+.k-note { font-size: .72rem; color: var(--muted); margin-top: .15rem; }
+
+/* form */
+.form {
+  background: var(--char); padding: 2.8rem;
+  border-top: 4px solid var(--ember);
+}
+.f-title { font-family: var(--serif); font-style: italic; font-size: 1.5rem; font-weight: 700; color: var(--cream); margin-bottom: .2rem; }
+.f-sub { font-size: .76rem; color: rgba(251,246,238,.3); margin-bottom: 2rem; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-bottom: .7rem; }
+.fg { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .7rem; }
+.fg label { font-size: .58rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(251,246,238,.28); }
+.fg input, .fg select, .fg textarea {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  color: var(--cream); padding: .72rem .9rem;
+  font-family: var(--sans); font-size: .86rem; font-weight: 300;
+  outline: none; border-radius: 0; -webkit-appearance: none; width: 100%;
+  transition: border-color .2s;
+}
+.fg select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ffffff40' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .9rem center; padding-right: 2rem;
+}
+.fg select option { background: var(--char); color: var(--cream); }
+.fg input::placeholder, .fg textarea::placeholder { color: rgba(251,246,238,.18); }
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--ember); }
+.fg textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+.f-btn {
+  width: 100%; padding: .95rem; background: var(--ember); color: #fff; border: none;
+  font-family: var(--sans); font-size: .72rem; font-weight: 500;
+  letter-spacing: .16em; text-transform: uppercase;
+  cursor: pointer; margin-top: .4rem; transition: background .2s; border-radius: 2px;
+}
+.f-btn:hover { background: var(--flame); }
+.f-ok { display: none; text-align: center; padding: 2.5rem 0; }
+.f-ok-sym { font-family: var(--serif); font-style: italic; font-size: 2.5rem; color: var(--flame); display: block; margin-bottom: .8rem; }
+.f-ok-h { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--cream); margin-bottom: .4rem; }
+.f-ok-p { font-size: .82rem; color: rgba(251,246,238,.35); }
+
+@media (max-width: 800px) { .kontakt-grid { grid-template-columns: 1fr; gap: 3rem; } }
+@media (max-width: 560px) { .f-row { grid-template-columns: 1fr; } .form { padding: 2rem 1.5rem; } }
+
+/* ── FOOTER ── */
+footer {
+  background: #110600; padding: 2rem var(--pad);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+  border-top: 1px solid rgba(224,90,43,.1);
+}
+.f-logo { font-family: var(--serif); font-style: italic; font-weight: 900; font-size: 1.3rem; color: var(--cream); }
+.f-logo span { color: var(--flame); }
+.f-copy { font-size: .66rem; color: rgba(251,246,238,.18); }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#topp" class="logo">AJ<span>I</span></a>
+  <ul class="nav-links">
+    <li><a href="#meny">Meny</a></li>
+    <li><a href="#kontakt" class="cta">Ta kontakt</a></li>
+  </ul>
+  <button class="burger" id="burger" onclick="navToggle()" aria-label="Meny">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="drawer" id="drawer">
+  <a href="#meny"    onclick="navClose()">Meny</a>
+  <a href="#kontakt" onclick="navClose()" class="d-cta">Ta kontakt</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="topp">
+  <p class="hero-eyebrow">Catering &amp; Events · Oslo · siden 2005</p>
+  <h1>AJ<em>I</em><br>Spiseri</h1>
+  <p class="hero-sub">Autentiske smaker fra Latin-Amerika — laget med kjærlighet, servert til ditt arrangement.</p>
+  <div class="hero-actions">
+    <a href="#kontakt" class="btn btn-fire">Be om tilbud</a>
+    <a href="#meny"    class="btn btn-ghost">Se meny</a>
+  </div>
+  <div class="hero-info">
+    <div class="hi"><strong>+47 967 59 095</strong>Man–Lør 09–18</div>
+    <div class="hi"><strong>post@ajistreetfood.no</strong>Svar innen 24 timer</div>
+    <div class="hi"><strong>@aji_spiseri</strong>Instagram</div>
+  </div>
+</section>
+
+<!-- MENY -->
+<section class="meny" id="meny">
+  <div class="section-top">
+    <div>
+      <p class="section-lbl">Meny</p>
+      <h2 class="section-h">Velg ditt <em>konsept</em></h2>
+    </div>
+    <div class="tabs">
+      <div class="tab on"  onclick="tab('parrillada',this)">Parrillada</div>
+      <div class="tab"     onclick="tab('paella',this)">Paella</div>
+      <div class="tab"     onclick="tab('selskap',this)">Selskapsmeny</div>
+      <div class="tab"     onclick="tab('tapas',this)">Tapas</div>
+      <div class="tab"     onclick="tab('taco',this)">Taco Bonanza</div>
+    </div>
+  </div>
+
+  <!-- PARRILLADA -->
+  <div class="panel on" id="p-parrillada">
+    <div class="panel-intro">
+      <p class="panel-desc">Søramerikansk grillparty laget på ekte ild. Servert med hjemmelaget surdeigsbrød eller focaccia, assorterte salater og urter.</p>
+      <div class="price-tag"><p class="price-lbl">Per kuvert</p><p class="price-val">595–795 kr</p><p class="price-note">Min. 25 pers.</p></div>
+    </div>
+    <div class="dishes">
+      <div class="dish"><p class="d-cat">Grill</p><h3 class="d-name">Entrecôte</h3><p class="d-desc">Toppet med tradisjonell argentinsk chimichurri.</p></div>
+      <div class="dish"><p class="d-cat">Grill — Peruansk</p><h3 class="d-name">Kyllingspyd</h3><p class="d-desc">Pollo anticuchero — panca chilli og aji amarillo marinade.</p></div>
+      <div class="dish"><p class="d-cat">Grill</p><h3 class="d-name">Choripán</h3><p class="d-desc">Grillet chorizopølse i brød, toppet med chimichurri.</p></div>
+      <div class="dish"><p class="d-cat">Tilbehør</p><h3 class="d-name">Grillede poteter</h3><p class="d-desc">Med kryddersmør og urtesmør.</p></div>
+      <div class="dish"><p class="d-cat">Salat</p><h3 class="d-name">Assortert salat</h3><p class="d-desc">Friske grønne grønnsaker, sesongbasert.</p></div>
+      <div class="dish"><p class="d-cat">Brød</p><h3 class="d-name">Surdeigsbrød / Focaccia</h3><p class="d-desc">Bakt selv av oss.</p></div>
+    </div>
+    <div class="sauces"><span class="sauce-lbl">Salsaer:</span><span class="sauce">Chimichurri</span><span class="sauce">Aioli</span><span class="sauce">Salsa Pebre</span></div>
+    <p class="vegan">🌱 Veganske alternativer tilgjengelig på forespørsel.</p>
+  </div>
+
+  <!-- PAELLA -->
+  <div class="panel" id="p-paella">
+    <div class="panel-intro">
+      <p class="panel-desc">Lages på stedet med caldo (kraft) og Arroz Bomba på tradisjonelt vis. Egner seg perfekt til store sammenkomster inne eller ute.</p>
+      <div class="price-tag"><p class="price-lbl">Per person</p><p class="price-val">395–595 kr</p><p class="price-note">30–150 pers.</p></div>
+    </div>
+    <div class="dishes">
+      <div class="dish"><p class="d-cat">Paella</p><h3 class="d-name">Paella Mariscos</h3><p class="d-desc">Sjømat, blåkjell, reker, ris og safran.</p></div>
+      <div class="dish"><p class="d-cat">Paella</p><h3 class="d-name">Paella Mixta</h3><p class="d-desc">Kylling, blåkjell, sjømat og safran. Laget med caldo og Arroz Bomba.</p></div>
+      <div class="dish"><p class="d-cat">Brød</p><h3 class="d-name">Surdeigsbrød / Focaccia</h3><p class="d-desc">Bakt selv av oss.</p></div>
+    </div>
+    <div class="sauces"><span class="sauce-lbl">Servert med:</span><span class="sauce">Aioli</span></div>
+  </div>
+
+  <!-- SELSKAPSMENY -->
+  <div class="panel" id="p-selskap">
+    <div class="panel-intro">
+      <p class="panel-desc">Tre retter skreddersydd for elegante sammenkomster — med valgfrie alternativer og et bredt utvalg salsaer og dressinger.</p>
+      <div class="price-tag"><p class="price-lbl">Per person</p><p class="price-val">fra 695 kr</p><p class="price-note">Tre retter inkl. brød.</p></div>
+    </div>
+    <div class="course">
+      <p class="c-title">Forrett</p>
+      <div class="c-opt"><p class="c-sep">—</p><div><p class="c-name">Planke med spekemat og oster</p><p class="c-desc">Servert med brød og aioli.</p></div></div>
+      <div class="c-opt"><p class="c-sep">el.</p><div><p class="c-name">Ceviche — Peruansk</p><p class="c-desc">Rå hvitfisk marinert i sitrusjuice (leche de tigre).</p></div></div>
+      <div class="c-opt"><p class="c-sep">el.</p><div><p class="c-name">Ceviche med avokado og marinerte scampi</p></div></div>
+    </div>
+    <div class="course">
+      <p class="c-title">Hovedrett</p>
+      <div class="c-opt"><p class="c-sep">—</p><div><p class="c-name">Glasert svinekam</p></div></div>
+      <div class="c-opt"><p class="c-sep">el.</p><div><p class="c-name">Grillet eller ovnsbakt oksefilet</p></div></div>
+      <div class="c-opt"><p class="c-sep">el.</p><div><p class="c-name">Ovnsbakt kveite / dagens hvitfisk</p></div></div>
+      <div class="c-opt"><p class="c-sep">el.</p><div><p class="c-name">Vegansk alternativ</p><p class="c-desc">Med gode lokale råvarer.</p></div></div>
+    </div>
+    <div class="sauces" style="margin-bottom:.8rem"><span class="sauce-lbl">Tilbehør:</span><span class="sauce">Ovnsbakte poteter</span><span class="sauce">Grillede grønnsaker</span></div>
+    <div class="sauces"><span class="sauce-lbl">Salsaer:</span><span class="sauce">Aioli</span><span class="sauce">Chimichurri</span><span class="sauce">Guasaca</span><span class="sauce">Pebre</span><span class="sauce">Rødvinssaus</span></div>
+    <div class="course" style="margin-top:2rem">
+      <p class="c-title">Dessert</p>
+      <div class="c-opt"><p class="c-sep">—</p><div><p class="c-name">Pannacotta / Tiramisu</p></div></div>
+      <div class="c-opt"><p class="c-sep">el.</p><div><p class="c-name">Sorbet med bær</p><p class="c-desc">Vegansk.</p></div></div>
+    </div>
+  </div>
+
+  <!-- TAPAS -->
+  <div class="panel" id="p-tapas">
+    <div class="panel-intro">
+      <p class="panel-desc">Småretter inspirert av spansk og søramerikansk matkultur — servert som buffet. Perfekt for grupper som ønsker variasjon.</p>
+      <div class="price-tag"><p class="price-lbl">Per person</p><p class="price-val">595–795 kr</p><p class="price-note">Inkl. brød og dessert.</p></div>
+    </div>
+    <div class="tapas">
+      <div class="tap"><p class="tap-name">Spanske kjøttboller i tomatsaus</p><p class="tap-desc">Albondigas i rik hjemmelaget tomatsaus.</p></div>
+      <div class="tap"><p class="tap-name">Kyllingspyd — Peruansk vis</p><p class="tap-desc">Autentiske krydder og chillier.</p></div>
+      <div class="tap"><p class="tap-name">Pimientos de Padrón</p><p class="tap-desc">Pannestekte padronpaprikaer med Maldon-salt.</p></div>
+      <div class="tap"><p class="tap-name">Vill scampi al ajillo</p><p class="tap-desc">Hvitløksmarinert villfanget reke/scampi.</p></div>
+      <div class="tap"><p class="tap-name">Chorizo a la Cidra</p><p class="tap-desc">Grillet chorizopølse marinert i cider.</p></div>
+      <div class="tap"><p class="tap-name">Grillede sesongsgrønnsaker</p><p class="tap-desc">Grillet over åpen ild.</p></div>
+      <div class="tap"><p class="tap-name">Patatas Bravas</p><p class="tap-desc">Med aji amarillo, rocoto og mayo.</p></div>
+      <div class="tap"><p class="tap-name">Frisk salat med cherry og feta</p><p class="tap-desc">Friske urter og vinaigrette.</p></div>
+    </div>
+    <div class="sauces" style="margin-top:1.5rem"><span class="sauce-lbl">Inkludert:</span><span class="sauce">Surdeigsbrød / Focaccia</span><span class="sauce">Aioli</span></div>
+    <div class="course" style="margin-top:2rem">
+      <p class="c-title">Dessert</p>
+      <div class="c-opt"><p class="c-sep">—</p><div><p class="c-name">Sitronpai (søramerikansk)</p></div></div>
+      <div class="c-opt"><p class="c-sep">el.</p><div><p class="c-name">Ostekake / Pannacotta</p></div></div>
+    </div>
+  </div>
+
+  <!-- TACO BONANZA -->
+  <div class="panel" id="p-taco">
+    <div class="panel-intro">
+      <p class="panel-desc">5 tacos per person med autentiske råvarer og tortillas av maíz. Populær til bursdager og konfirmasjoner.</p>
+      <div class="price-tag"><p class="price-lbl">Per person</p><p class="price-val">395 kr</p><p class="price-note">5 tacos p.p.<br>Glutenfri tortilla.</p></div>
+    </div>
+    <div class="taco">
+      <div>
+        <p style="font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(251,246,238,.28);margin-bottom:.8rem">Fyllinger</p>
+        <div class="fills">
+          <div class="fill"><div class="fill-dot"></div><div><p class="fill-name">Maíz Tortilla <span style="font-weight:300;color:rgba(251,246,238,.28)">(glutenfri)</span></p></div></div>
+          <div class="fill"><div class="fill-dot"></div><div><p class="fill-name">Tinga — revet kylling og løk</p><p class="fill-desc">Langsomt kokt med chipotle.</p></div></div>
+          <div class="fill"><div class="fill-dot"></div><div><p class="fill-name">Birria Beef</p><p class="fill-desc">Langtidskokt oksekjøtt — mørt og intenst krydret.</p></div></div>
+          <div class="fill"><div class="fill-dot"></div><div><p class="fill-name">Jamaica <span style="font-weight:300;color:rgba(251,246,238,.28)">(vegetar)</span></p><p class="fill-desc">Hibiskusblomst — saftig og smaksrik.</p></div></div>
+        </div>
+        <p class="taco-note">Passer utmerket til bursdager og konfirmasjoner.</p>
+      </div>
+      <div class="tilbehor">
+        <p class="til-lbl">Tilbehør</p>
+        <div class="til-row">Nachos</div>
+        <div class="til-row">Salsa verde</div>
+        <div class="til-row">Pico de gallo</div>
+        <div class="til-row">Syltet løk</div>
+        <div class="til-row">Jalapeños</div>
+        <div class="til-row">Ost / Quesillo</div>
+        <div class="til-row">Rømme</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="kontakt" id="kontakt">
+  <div class="kontakt-grid">
+    <div>
+      <p class="section-lbl" style="color:var(--ember)">Kontakt</p>
+      <h2 class="k-h">La oss lage noe<br><em>uforglemmelig</em><br>sammen</h2>
+      <p class="k-sub">Send oss en forespørsel — vi svarer innen 24 timer med et uforpliktende tilbud.</p>
+      <div class="k-items">
+        <div class="k-item">
+          <p class="k-lbl">E-post</p>
+          <p class="k-val"><a href="mailto:post@ajistreetfood.no">post@ajistreetfood.no</a></p>
+        </div>
+        <div class="k-item">
+          <p class="k-lbl">Telefon</p>
+          <p class="k-val"><a href="tel:+4796759095">+47 967 59 095</a></p>
+          <p class="k-note">Man–Lør, 09:00–18:00</p>
+        </div>
+        <div class="k-item">
+          <p class="k-lbl">Instagram</p>
+          <p class="k-val"><a href="https://instagram.com/aji_spiseri" target="_blank">@aji_spiseri</a></p>
+        </div>
+        <div class="k-item">
+          <p class="k-lbl">Lokaler</p>
+          <p class="k-val">Øvrevoll Galopp, Jar / Eiksmarka</p>
+          <p class="k-note">Vi leverer i Oslo og omegn</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form">
+      <div id="form-inner">
+        <h3 class="f-title">Be om tilbud</h3>
+        <p class="f-sub">Vi lager et tilbud spesielt for deg.</p>
+        <div class="f-row">
+          <div class="fg"><label>Navn / Bedrift *</label><input type="text" id="fn" placeholder="Maria García"></div>
+          <div class="fg"><label>E-post *</label><input type="email" id="em" placeholder="maria@epost.no"></div>
+        </div>
+        <div class="f-row">
+          <div class="fg"><label>Telefon</label><input type="tel" id="tel" placeholder="+47 ..."></div>
+          <div class="fg">
+            <label>Type arrangement *</label>
+            <select id="type">
+              <option value="">Velg...</option>
+              <option>Bryllup</option>
+              <option>Privat selskap</option>
+              <option>Konfirmasjon</option>
+              <option>Bursdag / jubileum</option>
+              <option>Bedriftsarrangement</option>
+              <option>Festival / marked</option>
+              <option>Annet</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="fg"><label>Dato</label><input type="date" id="dato"></div>
+          <div class="fg">
+            <label>Antall gjester</label>
+            <select id="ant">
+              <option value="">Velg...</option>
+              <option>Under 10</option>
+              <option>10–25</option>
+              <option>25–50</option>
+              <option>50–100</option>
+              <option>100–150</option>
+              <option>150+</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg"><label>Allergier / spesielle hensyn</label><input type="text" id="allerg" placeholder="F.eks. glutenfri, vegansk..."></div>
+        <div class="fg"><label>Melding</label><textarea id="msg" placeholder="Fortell oss om arrangementet ditt..."></textarea></div>
+        <button class="f-btn" onclick="send()">Send forespørsel →</button>
+      </div>
+      <div class="f-ok" id="f-ok">
+        <span class="f-ok-sym">✦</span>
+        <h3 class="f-ok-h">Tusen takk!</h3>
+        <p class="f-ok-p">Vi kommer tilbake til deg innen 24 timer på post@ajistreetfood.no</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-logo">AJ<span>I</span></span>
+  <p class="f-copy">© 2025 AJI Catering &amp; Events · Oslo</p>
+</footer>
+
+<script>
+function navToggle() {
+  const b = document.getElementById('burger');
+  const d = document.getElementById('drawer');
+  const open = !d.classList.contains('on');
+  b.classList.toggle('on', open);
+  d.classList.toggle('on', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function navClose() {
+  document.getElementById('burger').classList.remove('on');
+  document.getElementById('drawer').classList.remove('on');
+  document.body.style.overflow = '';
+}
+function tab(id, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('p-' + id).classList.add('on');
+}
+function send() {
+  const fn = document.getElementById('fn').value.trim();
+  const em = document.getElementById('em').value.trim();
+  const t  = document.getElementById('type').value;
+  if (!fn || !em || !t) { alert('Fyll ut navn, e-post og type arrangement.'); return; }
+  document.getElementById('form-inner').style.display = 'none';
+  document.getElementById('f-ok').style.display = 'block';
+}
+</script>
+</body>
+</html>
